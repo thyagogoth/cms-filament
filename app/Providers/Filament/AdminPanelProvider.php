@@ -40,7 +40,8 @@ class AdminPanelProvider extends PanelProvider
             ->setIcon('heroicon-o-cog')
             ->setNavigationGroup('Settings')
             ->setTitle('General Settings')
-            ->setNavigationLabel('General Settings'),
+            ->setNavigationLabel('General Settings');
+        
         $plugins = [
             $loginBackgroundImage,
             $archivable,
