@@ -32,12 +32,12 @@ class AdminPanelProvider extends PanelProvider
                 );
 
         // Archivable plugin | https://filamentphp.com/plugins/okeonline-archivable
-
+        $archivable = \Okeonline\FilamentArchivable\FilamentArchivablePlugin::make();
 
         $plugins = [
             $loginBackgroundImage,
+            $archivable,
         ];
-
 
         return $panel
             ->default()

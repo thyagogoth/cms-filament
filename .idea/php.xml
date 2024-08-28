@@ -166,6 +166,8 @@
       <path value="$PROJECT_DIR$/vendor/symfony/string" />
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/vendor/swisnl/filament-backgrounds" />
+      <path value="$PROJECT_DIR$/vendor/joelbutcher/laravel-archivable" />
+      <path value="$PROJECT_DIR$/vendor/okeonline/filament-archivable" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

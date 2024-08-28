@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6791208c1a97abca39dca0ca293605f0",
+    "content-hash": "115d1acdbaaec083bdc1b3d90c6b31fc",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -1959,6 +1959,65 @@
             "time": "2023-12-03T19:50:20+00:00"
         },
         {
+            "name": "joelbutcher/laravel-archivable",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joelbutcher/laravel-archivable.git",
+                "reference": "5b53d79738a1b3524a0b499905b92768905cb41f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joelbutcher/laravel-archivable/zipball/5b53d79738a1b3524a0b499905b92768905cb41f",
+                "reference": "5b53d79738a1b3524a0b499905b92768905cb41f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^7.0|^8.0|^9.0|^10.0|^11.0",
+                "illuminate/support": "^7.0|^8.0|^9.0|^10.0|^11.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "illuminate/pagination": "^7.0|^8.0|^9.0|^10.0|^11.0",
+                "orchestra/testbench": "^6.3|^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^8.4|^9.1|^10.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelArchivable\\LaravelArchivableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelArchivable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joel Butcher",
+                    "email": "joel@joelbutcher.co.uk"
+                }
+            ],
+            "description": "An archivable trait package for Laravel Eloquent models",
+            "homepage": "https://github.com/joelbutcher/laravel-archivable",
+            "keywords": [
+                "laravel",
+                "laravel-archivable"
+            ],
+            "support": {
+                "issues": "https://github.com/joelbutcher/laravel-archivable/issues",
+                "source": "https://github.com/joelbutcher/laravel-archivable"
+            },
+            "time": "2024-02-28T09:33:46+00:00"
+        },
+        {
             "name": "kirschbaum-development/eloquent-power-joins",
             "version": "3.5.7",
             "source": {
@@ -3692,6 +3751,88 @@
                 }
             ],
             "time": "2024-03-06T16:17:14+00:00"
+        },
+        {
+            "name": "okeonline/filament-archivable",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/okeonline/filament-archivable.git",
+                "reference": "c62f89f9a4396654842c909cbcd9a55d7deb9359"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/okeonline/filament-archivable/zipball/c62f89f9a4396654842c909cbcd9a55d7deb9359",
+                "reference": "c62f89f9a4396654842c909cbcd9a55d7deb9359",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^3.2",
+                "illuminate/contracts": "^10.0||^11.0",
+                "illuminate/database": "^11.0",
+                "illuminate/support": "^11.0",
+                "joelbutcher/laravel-archivable": "^1.4",
+                "php": "^8.3",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "filament/tables": "^3.2.57",
+                "laravel/pint": "^1.14",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^9.0.0||^8.22.0",
+                "pestphp/pest": "^2.34",
+                "pestphp/pest-plugin-arch": "^2.7",
+                "pestphp/pest-plugin-laravel": "^2.3",
+                "pestphp/pest-plugin-livewire": "^2.1",
+                "pestphp/pest-plugin-watch": "^2.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Okeonline\\FilamentArchivable\\FilamentArchivableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Okeonline\\FilamentArchivable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rudi van Zandwijk",
+                    "email": "rudi.vanzandwijk@okeonline.nl",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A filament plugin to use archivable models",
+            "homepage": "https://github.com/okeonline/filament-archivable",
+            "keywords": [
+                "OKE Online",
+                "eloquent",
+                "filament",
+                "filament-archivable",
+                "filament-plugins",
+                "filamentphp",
+                "laravel",
+                "laravel-eloquent"
+            ],
+            "support": {
+                "issues": "https://github.com/okeonline/filament-archivable/issues",
+                "source": "https://github.com/okeonline/filament-archivable/tree/v1.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/OKE Online",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-08-09T17:21:05+00:00"
         },
         {
             "name": "openspout/openspout",
