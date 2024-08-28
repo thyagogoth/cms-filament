@@ -27,19 +27,33 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->colors([
-                'primary' => Color::Amber,
-            ])
+            ->colors($this->getColors())
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->pages([
-                Pages\Dashboard::class,
-            ])
+            ->pages($this->getPages())
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets($this->getWidgets())
             ->middleware($this->getMiddleware())
             ->authMiddleware($this->getAuthMiddleware())
             ->plugins($this->getPlugins());
+    }
+
+    protected function getColors(): array
+    {
+        return [
+                'primary' => Color::Green,
+//            'primary' => Color::Amber,
+//            'secondary' => Color::Blue,
+//            'tertiary' => Color::Gray,
+//            'accent' => Color::Indigo,
+        ];
+    }
+
+    protected function getPages(): array
+    {
+        return [
+            Pages\Dashboard::class,
+        ];
     }
 
     protected function getWidgets(): array
