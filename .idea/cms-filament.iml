@@ -159,6 +159,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/joelbutcher/laravel-archivable" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/okeonline/filament-archivable" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/joaopaulolndev/filament-general-settings" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

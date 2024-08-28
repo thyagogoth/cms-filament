@@ -168,6 +168,7 @@
       <path value="$PROJECT_DIR$/vendor/swisnl/filament-backgrounds" />
       <path value="$PROJECT_DIR$/vendor/joelbutcher/laravel-archivable" />
       <path value="$PROJECT_DIR$/vendor/okeonline/filament-archivable" />
+      <path value="$PROJECT_DIR$/vendor/joaopaulolndev/filament-general-settings" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

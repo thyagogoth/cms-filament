@@ -31,12 +31,20 @@ class AdminPanelProvider extends PanelProvider
                         ->directory('images/background-images'),
                 );
 
-        // Archivable plugin | https://filamentphp.com/plugins/okeonline-archivable
+        // Archivable plugin | https://filamentphp.com/plugins/okeonline-archivable#installation
         $archivable = \Okeonline\FilamentArchivable\FilamentArchivablePlugin::make();
 
+        // General Settings | https://filamentphp.com/plugins/joaopaulolndev-general-settings#installation
+        $generalSettings = \Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin::make()
+//                    ->canAccess(fn() => auth()->user()->id > 0)
+            ->setIcon('heroicon-o-cog')
+            ->setNavigationGroup('Settings')
+            ->setTitle('General Settings')
+            ->setNavigationLabel('General Settings'),
         $plugins = [
             $loginBackgroundImage,
             $archivable,
+            $generalSettings,
         ];
 
         return $panel
