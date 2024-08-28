@@ -23,21 +23,21 @@ class AdminPanelProvider extends PanelProvider
     protected function getPlugins(): array
     {
         return [
-            $this->createArchivablePlugin(),
-            $this->createGeneralSettingsPlugin(),
-            $this->createLoginBackgroundImagePlugin(),
-            $this->createSpotlightPlugin(),
+            $this->initArchivablePlugin(),
+            $this->initGeneralSettingsPlugin(),
+            $this->initLoginBackgroundImagePlugin(),
+            $this->initSpotlightPlugin(),
         ];
     }
 
     // Archivable plugin | https://filamentphp.com/plugins/okeonline-archivable#installation
-    protected function createArchivablePlugin()
+    protected function initArchivablePlugin()
     {
         return \Okeonline\FilamentArchivable\FilamentArchivablePlugin::make();
     }
 
     // General Settings | https://filamentphp.com/plugins/joaopaulolndev-general-settings#installation
-    protected function createGeneralSettingsPlugin()
+    protected function initGeneralSettingsPlugin()
     {
         return \Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin::make()
             ->setIcon('heroicon-o-cog')
@@ -47,7 +47,7 @@ class AdminPanelProvider extends PanelProvider
     }
 
     // image Dashboard Background plugin | https://filamentphp.com/plugins/swisnl-backgrounds#installation
-    protected function createLoginBackgroundImagePlugin()
+    protected function initLoginBackgroundImagePlugin()
     {
         return \Swis\Filament\Backgrounds\FilamentBackgroundsPlugin::make()
             ->showAttribution(false)
@@ -58,7 +58,7 @@ class AdminPanelProvider extends PanelProvider
     }
 
     // Spotlight plugin | https://filamentphp.com/plugins/pxlrbt-spotlight#installation
-    protected function createSpotlightPlugin()
+    protected function initSpotlightPlugin()
     {
         return \pxlrbt\FilamentSpotlight\SpotlightPlugin::make();
     }
