@@ -162,6 +162,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/joaopaulolndev/filament-general-settings" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pxlrbt/filament-spotlight" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/wire-elements/spotlight" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bezhansalleh/filament-shield" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/spatie/laravel-permission" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
