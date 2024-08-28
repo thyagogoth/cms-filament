@@ -22,6 +22,23 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+
+        // image Dashboard Background plugin | https://filamentphp.com/plugins/swisnl-backgrounds#installation
+        $loginBackgroundImage = \Swis\Filament\Backgrounds\FilamentBackgroundsPlugin::make() //https://filamentphp.com/plugins/swisnl-backgrounds
+                ->showAttribution(false)
+                ->imageProvider(
+                    \Swis\Filament\Backgrounds\ImageProviders\MyImages::make()
+                        ->directory('images/background-images'),
+                );
+
+        // Archivable plugin | https://filamentphp.com/plugins/okeonline-archivable
+
+
+        $plugins = [
+            $loginBackgroundImage,
+        ];
+
+
         return $panel
             ->default()
             ->id('admin')
@@ -53,6 +70,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->plugins($plugins);
     }
 }
