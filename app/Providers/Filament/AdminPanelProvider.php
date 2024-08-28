@@ -20,34 +20,51 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
-    public function panel(Panel $panel): Panel
+    protected function getPlugins(): array
     {
+        return [
+            $this->createArchivablePlugin(),
+            $this->createGeneralSettingsPlugin(),
+            $this->createLoginBackgroundImagePlugin(),
+            $this->createSpotlightPlugin(),
+        ];
+    }
 
-        // image Dashboard Background plugin | https://filamentphp.com/plugins/swisnl-backgrounds#installation
-        $loginBackgroundImage = \Swis\Filament\Backgrounds\FilamentBackgroundsPlugin::make() //https://filamentphp.com/plugins/swisnl-backgrounds
-                ->showAttribution(false)
-                ->imageProvider(
-                    \Swis\Filament\Backgrounds\ImageProviders\MyImages::make()
-                        ->directory('images/background-images'),
-                );
+    // Archivable plugin | https://filamentphp.com/plugins/okeonline-archivable#installation
+    protected function createArchivablePlugin()
+    {
+        return \Okeonline\FilamentArchivable\FilamentArchivablePlugin::make();
+    }
 
-        // Archivable plugin | https://filamentphp.com/plugins/okeonline-archivable#installation
-        $archivable = \Okeonline\FilamentArchivable\FilamentArchivablePlugin::make();
-
-        // General Settings | https://filamentphp.com/plugins/joaopaulolndev-general-settings#installation
-        $generalSettings = \Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin::make()
-//                    ->canAccess(fn() => auth()->user()->id > 0)
+    // General Settings | https://filamentphp.com/plugins/joaopaulolndev-general-settings#installation
+    protected function createGeneralSettingsPlugin()
+    {
+        return \Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin::make()
             ->setIcon('heroicon-o-cog')
             ->setNavigationGroup('Settings')
             ->setTitle('General Settings')
             ->setNavigationLabel('General Settings');
-        
-        $plugins = [
-            $loginBackgroundImage,
-            $archivable,
-            $generalSettings,
-        ];
+    }
 
+    // image Dashboard Background plugin | https://filamentphp.com/plugins/swisnl-backgrounds#installation
+    protected function createLoginBackgroundImagePlugin()
+    {
+        return \Swis\Filament\Backgrounds\FilamentBackgroundsPlugin::make()
+            ->showAttribution(false)
+            ->imageProvider(
+                \Swis\Filament\Backgrounds\ImageProviders\MyImages::make()
+                    ->directory('images/background-images'),
+            );
+    }
+
+    // Spotlight plugin | https://filamentphp.com/plugins/pxlrbt-spotlight#installation
+    protected function createSpotlightPlugin()
+    {
+        return \pxlrbt\FilamentSpotlight\SpotlightPlugin::make();
+    }
+
+    public function panel(Panel $panel): Panel
+    {
         return $panel
             ->default()
             ->id('admin')
@@ -66,20 +83,30 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
             ])
-            ->middleware([
-                EncryptCookies::class,
-                AddQueuedCookiesToResponse::class,
-                StartSession::class,
-                AuthenticateSession::class,
-                ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
-                SubstituteBindings::class,
-                DisableBladeIconComponents::class,
-                DispatchServingFilamentEvent::class,
-            ])
-            ->authMiddleware([
-                Authenticate::class,
-            ])
-            ->plugins($plugins);
+            ->middleware($this->getMiddleware())
+            ->authMiddleware($this->getAuthMiddleware())
+            ->plugins($this->getPlugins());
+    }
+
+    protected function getMiddleware(): array
+    {
+        return [
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            AuthenticateSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+            DisableBladeIconComponents::class,
+            DispatchServingFilamentEvent::class,
+        ];
+    }
+
+    protected function getAuthMiddleware(): array
+    {
+        return [
+            Authenticate::class,
+        ];
     }
 }

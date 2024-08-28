@@ -169,6 +169,8 @@
       <path value="$PROJECT_DIR$/vendor/joelbutcher/laravel-archivable" />
       <path value="$PROJECT_DIR$/vendor/okeonline/filament-archivable" />
       <path value="$PROJECT_DIR$/vendor/joaopaulolndev/filament-general-settings" />
+      <path value="$PROJECT_DIR$/vendor/pxlrbt/filament-spotlight" />
+      <path value="$PROJECT_DIR$/vendor/wire-elements/spotlight" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
