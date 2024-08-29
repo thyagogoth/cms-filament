@@ -13,7 +13,10 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasFactory, HasRoles, Notifiable, HasPanelShield;
+    use HasFactory;
+    use HasRoles;
+    use Notifiable;
+    use HasPanelShield;
 
     /**
      * The attributes that are mass assignable.
@@ -45,7 +48,7 @@ class User extends Authenticatable implements FilamentUser
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 

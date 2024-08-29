@@ -4,11 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PostResource\Pages;
 use App\Models\Post;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\{Forms, Tables};
 use Illuminate\Support\Facades\Auth;
 
 class PostResource extends Resource
@@ -130,9 +129,9 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
+            'index'  => Pages\ListPosts::route('/'),
             'create' => Pages\CreatePost::route('/create'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
+            'edit'   => Pages\EditPost::route('/{record}/edit'),
         ];
     }
 }

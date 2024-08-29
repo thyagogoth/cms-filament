@@ -2,24 +2,19 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Http\Middleware\Authenticate;
-use Filament\Http\Middleware\DisableBladeIconComponents;
-use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
-use Filament\Panel;
-use Filament\PanelProvider;
+use Filament\Http\Middleware\{Authenticate, DisableBladeIconComponents, DispatchServingFilamentEvent};
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Illuminate\Cookie\Middleware\EncryptCookies;
+use Filament\{Pages, Panel, PanelProvider, Widgets};
+use Illuminate\Cookie\Middleware\{AddQueuedCookiesToResponse, EncryptCookies};
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
-use Illuminate\Session\Middleware\AuthenticateSession;
-use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Session\Middleware\{AuthenticateSession, StartSession};
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+    private bool $enablePersonalNavigation = false;
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -27,10 +22,12 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->colors(['primary' => $this->getColor('gray'),])
+            ->colors(['primary' => $this->getColor('gray'), ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->navigation($this->makeMenu())
+            ->navigation(
+                $this->enablePersonalNavigation ? $this->makePersonalNavigation() : true
+            )
             ->pages($this->getPages())
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets($this->getWidgets())
@@ -39,54 +36,53 @@ class AdminPanelProvider extends PanelProvider
             ->plugins($this->getPlugins());
     }
 
-    protected function makeMenu(): \Closure
+    protected function makePersonalNavigation(): \Closure
     {
         return function (\Filament\Navigation\NavigationBuilder $builder): \Filament\Navigation\NavigationBuilder {
             return $builder->groups([
                 \Filament\Navigation\NavigationGroup::make('Shop')->items([
-//                        ...\App\Filament\Resources\OrderResource::getNavigationItems(),
-//                        ...\App\Filament\Resources\ProductResource::getNavigationItems(),
-//                        ...\App\Filament\Resources\StockResource::getNavigationItems(),
-//                        ...\App\Filament\Resources\ShippingTypeResource::getNavigationItems(),
+                    //                        ...\App\Filament\Resources\OrderResource::getNavigationItems(),
+                    //                        ...\App\Filament\Resources\ProductResource::getNavigationItems(),
+                    //                        ...\App\Filament\Resources\StockResource::getNavigationItems(),
+                    //                        ...\App\Filament\Resources\ShippingTypeResource::getNavigationItems(),
                 ]),
                 \Filament\Navigation\NavigationGroup::make('Content')->items([
                     ...\App\Filament\Resources\PostResource::getNavigationItems(),
                     ...\App\Filament\Resources\CategoryResource::getNavigationItems(),
-//                        ...NavigationResource::getNavigationItems()
+                    //                        ...NavigationResource::getNavigationItems()
                 ]),
                 \Filament\Navigation\NavigationGroup::make('Users & Roles')->items([
-//                        ...UserResource::getNavigationItems()
-                ])
+                    //                        ...UserResource::getNavigationItems()
+                ]),
             ]);
         };
     }
 
     protected function getColor(?string $index = null): array
     {
-
         $colors = [
-            'slate' => Color::Slate,
-            'gray' => Color::Gray,
-            'zinc' => Color::Zinc,
+            'slate'   => Color::Slate,
+            'gray'    => Color::Gray,
+            'zinc'    => Color::Zinc,
             'neutral' => Color::Neutral,
-            'stone' => Color::Stone,
-            'red' => Color::Red,
-            'orange' => Color::Orange,
-            'amber' => Color::Amber,
-            'yellow' => Color::Yellow,
-            'lime' => Color::Lime,
-            'green' => Color::Green,
+            'stone'   => Color::Stone,
+            'red'     => Color::Red,
+            'orange'  => Color::Orange,
+            'amber'   => Color::Amber,
+            'yellow'  => Color::Yellow,
+            'lime'    => Color::Lime,
+            'green'   => Color::Green,
             'emerald' => Color::Emerald,
-            'teal' => Color::Teal,
-            'cyan' => Color::Cyan,
-            'sky' => Color::Sky,
-            'blue' => Color::Blue,
-            'indigo' => Color::Indigo,
-            'violet' => Color::Violet,
-            'purple' => Color::Purple,
+            'teal'    => Color::Teal,
+            'cyan'    => Color::Cyan,
+            'sky'     => Color::Sky,
+            'blue'    => Color::Blue,
+            'indigo'  => Color::Indigo,
+            'violet'  => Color::Violet,
+            'purple'  => Color::Purple,
             'fuchsia' => Color::Fuchsia,
-            'pink' => Color::Pink,
-            'rose' => Color::Rose,
+            'pink'    => Color::Pink,
+            'rose'    => Color::Rose,
         ];
 
         if ($index) {
@@ -97,7 +93,6 @@ class AdminPanelProvider extends PanelProvider
             // return a random color
             return $colors[array_rand($colors)];
         }
-
     }
 
     protected function getPages(): array

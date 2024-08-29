@@ -21,7 +21,7 @@ class ListPosts extends ListRecords
     public function getTabs(): array
     {
         return [
-            'all' => Tab::make('All Posts'),
+            'all'       => Tab::make('All Posts'),
             'published' => Tab::make('Published')->modifyQueryUsing(function ($query) {
                 return $query->where('is_published', true);
             }),
