@@ -21,14 +21,14 @@ class ListPosts extends ListRecords
     public function getTabs(): array
     {
         return [
-            'all'       => Tab::make('All Posts'),
-            'published' => Tab::make('Published')->modifyQueryUsing(function ($query) {
+            'all'       => Tab::make(__('All')),
+            'published' => Tab::make(__('Published'))->modifyQueryUsing(function ($query) {
                 return $query->where('is_published', true);
             }),
-            'draft' => Tab::make('Draft')->modifyQueryUsing(function ($query) {
+            'draft' => Tab::make(__('Draft'))->modifyQueryUsing(function ($query) {
                 return $query->where('is_published', false);
             }),
-            'featured' => Tab::make('Featured')->modifyQueryUsing(function ($query) {
+            'featured' => Tab::make(__('Featured'))->modifyQueryUsing(function ($query) {
                 return $query->where('is_featured', true);
             }),
         ];

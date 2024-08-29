@@ -2,32 +2,53 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\{CategoryResource, NavigationResource, PostResource};
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Closure;
 use Filament\Http\Middleware\{Authenticate, DisableBladeIconComponents, DispatchServingFilamentEvent};
 use Filament\Support\Colors\Color;
-use Filament\{Pages, Panel, PanelProvider, Widgets};
+use Filament\{Forms\Components\Field,
+    Navigation\NavigationBuilder,
+    Navigation\NavigationGroup,
+    Pages,
+    Panel,
+    PanelProvider,
+    Tables\Columns\Column,
+    Widgets};
 use Illuminate\Cookie\Middleware\{AddQueuedCookiesToResponse, EncryptCookies};
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\{AuthenticateSession, StartSession};
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use InvalidArgumentException;
+use Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin;
+use Okeonline\FilamentArchivable\FilamentArchivablePlugin;
+use pxlrbt\FilamentSpotlight\SpotlightPlugin;
+use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
+use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 
 class AdminPanelProvider extends PanelProvider
 {
-    private bool $enablePersonalNavigation = false;
+    private bool $enablePersonalNavigation = true;
 
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->bootUsing(fn() => $this->bootUsing())
             ->default()
             ->id('admin')
             ->path('admin')
             ->login()
             ->colors(['primary' => $this->getColor('gray'), ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
-            ->navigation(
-                $this->enablePersonalNavigation ? $this->makePersonalNavigation() : true
+            ->discoverResources(
+                in: app_path('Filament/Resources'),
+                for: 'App\\Filament\\Resources'
             )
+            ->discoverPages(
+                in: app_path('Filament/Pages'),
+                for: 'App\\Filament\\Pages'
+            )
+            ->navigation($this->getNavigation())
             ->pages($this->getPages())
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets($this->getWidgets())
@@ -36,29 +57,54 @@ class AdminPanelProvider extends PanelProvider
             ->plugins($this->getPlugins());
     }
 
-    protected function makePersonalNavigation(): \Closure
+    private function bootUsing(): void
     {
-        return function (\Filament\Navigation\NavigationBuilder $builder): \Filament\Navigation\NavigationBuilder {
+
+//        \Filament\Facades\Filament::serving(function () {
+////            \Filament\Facades\Filament::notify('Você foi autenticado com sucesso!');
+//            \Filament\Notifications\Notification::make()
+//                ->title('Operação realizada com sucesso!')
+//                ->success()
+//                ->send();
+//        });
+
+        Field::configureUsing( function(Field $field) {
+            $field->translateLabel();
+        });
+
+       Column::configureUsing( function(Column $column) {
+            $column->translateLabel();
+        });
+    }
+
+    protected function getNavigation(): true|Closure
+    {
+        return $this->enablePersonalNavigation ? $this->makePersonalNavigation() : true;
+    }
+
+    protected function makePersonalNavigation(): Closure
+    {
+        return function (NavigationBuilder $builder): NavigationBuilder {
             return $builder->groups([
-                \Filament\Navigation\NavigationGroup::make('Shop')->items([
+                NavigationGroup::make('Shop')->items([
                     //                        ...\App\Filament\Resources\OrderResource::getNavigationItems(),
                     //                        ...\App\Filament\Resources\ProductResource::getNavigationItems(),
                     //                        ...\App\Filament\Resources\StockResource::getNavigationItems(),
                     //                        ...\App\Filament\Resources\ShippingTypeResource::getNavigationItems(),
                 ]),
-                \Filament\Navigation\NavigationGroup::make('Content')->items([
-                    ...\App\Filament\Resources\PostResource::getNavigationItems(),
-                    ...\App\Filament\Resources\CategoryResource::getNavigationItems(),
-                    //                        ...NavigationResource::getNavigationItems()
+                NavigationGroup::make('Content')->items([
+                    ...PostResource::getNavigationItems(),
+                    ...CategoryResource::getNavigationItems(),
+                    ...NavigationResource::getNavigationItems(),
                 ]),
-                \Filament\Navigation\NavigationGroup::make('Users & Roles')->items([
+                NavigationGroup::make('Users & Roles')->items([
                     //                        ...UserResource::getNavigationItems()
                 ]),
             ]);
         };
     }
 
-    protected function getColor(?string $index = null): array
+    protected function getColor(?string $index = 'amber'): array
     {
         $colors = [
             'slate'   => Color::Slate,
@@ -85,14 +131,13 @@ class AdminPanelProvider extends PanelProvider
             'rose'    => Color::Rose,
         ];
 
-        if ($index) {
-            $index = strtolower($index);
+        $index = strtolower($index);
 
-            return $colors[$index];
-        } else {
-            // return a random color
-            return $colors[array_rand($colors)];
+        if (!array_key_exists($index, $colors)) {
+            throw new InvalidArgumentException("Invalid color index: {$index}");
         }
+
+        return $colors[$index];
     }
 
     protected function getPages(): array
@@ -144,15 +189,15 @@ class AdminPanelProvider extends PanelProvider
     }
 
     // Archivable plugin | https://filamentphp.com/plugins/okeonline-archivable#installation
-    protected function initArchivablePlugin()
+    protected function initArchivablePlugin(): FilamentArchivablePlugin
     {
-        return \Okeonline\FilamentArchivable\FilamentArchivablePlugin::make();
+        return FilamentArchivablePlugin::make();
     }
 
     // General Settings | https://filamentphp.com/plugins/joaopaulolndev-general-settings#installation
-    protected function initGeneralSettingsPlugin()
+    protected function initGeneralSettingsPlugin(): FilamentGeneralSettingsPlugin
     {
-        return \Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin::make()
+        return FilamentGeneralSettingsPlugin::make()
             ->setIcon('heroicon-o-cog')
             ->setNavigationGroup('Settings')
             ->setTitle('General Settings')
@@ -160,25 +205,25 @@ class AdminPanelProvider extends PanelProvider
     }
 
     // image Dashboard Background plugin | https://filamentphp.com/plugins/swisnl-backgrounds#installation
-    protected function initLoginBackgroundImagePlugin()
+    protected function initLoginBackgroundImagePlugin(): FilamentBackgroundsPlugin
     {
-        return \Swis\Filament\Backgrounds\FilamentBackgroundsPlugin::make()
+        return FilamentBackgroundsPlugin::make()
             ->showAttribution(false)
             ->imageProvider(
-                \Swis\Filament\Backgrounds\ImageProviders\MyImages::make()
+                MyImages::make()
                     ->directory('images/background-images'),
             );
     }
 
     // Spotlight plugin | https://filamentphp.com/plugins/pxlrbt-spotlight#installation
-    protected function initSpotlightPlugin()
+    protected function initSpotlightPlugin(): SpotlightPlugin
     {
-        return \pxlrbt\FilamentSpotlight\SpotlightPlugin::make();
+        return SpotlightPlugin::make();
     }
 
     // Shield Plugin | https://filamentphp.com/plugins/bezhansalleh-shield#installation
-    protected function initShieldPlugin()
+    protected function initShieldPlugin(): FilamentShieldPlugin
     {
-        return \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make();
+        return FilamentShieldPlugin::make();
     }
 }

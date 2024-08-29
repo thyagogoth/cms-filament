@@ -12,12 +12,11 @@ class Navigation extends Model
     protected $fillable = [
         'items',
         'bg_color',
-        'items_sidebar'
+        'items_sidebar',
     ];
 
     protected $casts = [
-        'items' => 'array',
-        'items_sidebar' => 'array'
+        'items'         => 'array',
+        'items_sidebar' => 'array',
     ];
-
 }

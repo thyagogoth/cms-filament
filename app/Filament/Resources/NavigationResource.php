@@ -2,16 +2,13 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\NavigationResource\Pages;
-use App\Filament\Resources\NavigationResource\RelationManagers;
+use App\Filament\Resources\NavigationResource\{Pages};
 use App\Models\Navigation;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\{Forms, Tables};
 use Illuminate\Support\Facades\Route;
-
 
 class NavigationResource extends Resource
 {
@@ -36,10 +33,10 @@ class NavigationResource extends Resource
                         ->placeholder('example-page'),
                     Forms\Components\Checkbox::make('external_link')->label('Open in new tab'),
                     Forms\Components\Select::make('show_for')->options([
-                        'users' => 'Users',
+                        'users'    => 'Users',
                         'everyone' => 'Everyone',
-                        'public' => 'Public'
-                    ])
+                        'public'   => 'Public',
+                    ]),
                 ]),
                 Forms\Components\Repeater::make('items_sidebar')->schema([
                     Forms\Components\TextInput::make('title')->required(),
@@ -54,13 +51,13 @@ class NavigationResource extends Resource
                         ->placeholder('example-page'),
                     Forms\Components\Checkbox::make('external_link')->label('Open in new tab'),
                     Forms\Components\Select::make('show_for')->options([
-                        'users' => 'Users',
+                        'users'    => 'Users',
                         'everyone' => 'Everyone',
-                        'public' => 'Public'
-                    ])
+                        'public'   => 'Public',
+                    ]),
                 ]),
                 Forms\Components\ColorPicker::make('bg_color')->label('Background Color'),
-                Forms\Components\Checkbox::make('is_active')
+                Forms\Components\Checkbox::make('is_active'),
             ]);
     }
 
@@ -69,7 +66,7 @@ class NavigationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ColorColumn::make('bg_color'),
-                Tables\Columns\CheckboxColumn::make('is_active')
+                Tables\Columns\CheckboxColumn::make('is_active'),
             ])
             ->filters([
                 //
@@ -84,7 +81,6 @@ class NavigationResource extends Resource
             ]);
     }
 
-
     public static function getRelations(): array
     {
         return [
@@ -95,9 +91,9 @@ class NavigationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListNavigations::route('/'),
+            'index'  => Pages\ListNavigations::route('/'),
             'create' => Pages\CreateNavigation::route('/create'),
-            'edit' => Pages\EditNavigation::route('/{record}/edit'),
+            'edit'   => Pages\EditNavigation::route('/{record}/edit'),
         ];
     }
 }
