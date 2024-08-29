@@ -52,8 +52,18 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'profile_photo_url',
+    ];
+
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
+
 }

@@ -22,6 +22,8 @@ class Post extends Model implements HasMedia
         'user_id',
     ];
 
+    public $casts = ['content' => 'array'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -29,16 +31,17 @@ class Post extends Model implements HasMedia
 
     public function excerpt(): string
     {
+//        return Str::words(tiptap_converter()->asText($this->content), 40, '...');
         return Str::words(strip_tags($this->content), 200, '...');
-    }
-
-    public function cover(): string
-    {
-        return $this->getFirstMediaUrl();
     }
 
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function cover(): string
+    {
+        return $this->getFirstMediaUrl();
     }
 }
