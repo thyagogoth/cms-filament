@@ -29,7 +29,7 @@ use Swis\Filament\Backgrounds\ImageProviders\MyImages;
 
 class AdminPanelProvider extends PanelProvider
 {
-    private bool $enablePersonalNavigation = true;
+    private bool $enablePersonalNavigation = false;
 
     public function panel(Panel $panel): Panel
     {

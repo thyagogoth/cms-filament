@@ -20,43 +20,65 @@ class NavigationResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Repeater::make('items')->schema([
-                    Forms\Components\TextInput::make('title')->required(),
-                    Forms\Components\Select::make('url')
-                        ->searchable()
-                        ->options(function () {
-                            return collect(Route::getRoutes()->getRoutesByMethod()['GET'])->mapWithKeys(function ($route) {
-                                return [$route->getName() => $route->uri()];
-                            });
-                        })
-                        ->required()
-                        ->placeholder('example-page'),
-                    Forms\Components\Checkbox::make('external_link')->label('Open in new tab'),
-                    Forms\Components\Select::make('show_for')->options([
-                        'users'    => 'Users',
-                        'everyone' => 'Everyone',
-                        'public'   => 'Public',
+                Forms\Components\Repeater::make('items')
+                    ->schema([
+
+                        Forms\Components\TextInput::make('title')
+                            ->required(),
+
+                        Forms\Components\Select::make('url')
+                            ->searchable()
+                            ->options(function () {
+                                return collect(Route::getRoutes()
+                                    ->getRoutesByMethod()['GET'])
+                                    ->mapWithKeys(function ($route) {
+                                        return [$route->getName() => $route->uri()];
+                                    });
+                            })
+                            ->required()
+                            ->placeholder('example-page'),
+
+                        Forms\Components\Checkbox::make('external_link')
+                            ->label('Open in new tab'),
+
+                        Forms\Components\Select::make('show_for')
+                            ->options([
+                                'users' => 'Users',
+                                'everyone' => 'Everyone',
+                                'public' => 'Public',
+                            ]),
                     ]),
-                ]),
-                Forms\Components\Repeater::make('items_sidebar')->schema([
-                    Forms\Components\TextInput::make('title')->required(),
-                    Forms\Components\Select::make('url')
-                        ->searchable()
-                        ->options(function () {
-                            return collect(Route::getRoutes()->getRoutesByMethod()['GET'])->mapWithKeys(function ($route) {
-                                return [$route->getName() => $route->uri()];
-                            });
-                        })
-                        ->required()
-                        ->placeholder('example-page'),
-                    Forms\Components\Checkbox::make('external_link')->label('Open in new tab'),
-                    Forms\Components\Select::make('show_for')->options([
-                        'users'    => 'Users',
-                        'everyone' => 'Everyone',
-                        'public'   => 'Public',
+
+                Forms\Components\Repeater::make('items_sidebar')
+                    ->schema([
+
+                        Forms\Components\TextInput::make('title')
+                            ->required(),
+
+                        Forms\Components\Select::make('url')
+                            ->searchable()
+                            ->options(function () {
+                                return collect(Route::getRoutes()->getRoutesByMethod()['GET'])->mapWithKeys(function ($route) {
+                                    return [$route->getName() => $route->uri()];
+                                });
+                            })
+                            ->required()
+                            ->placeholder('example-page'),
+
+                        Forms\Components\Checkbox::make('external_link')
+                            ->label('Open in new tab'),
+
+                        Forms\Components\Select::make('show_for')
+                            ->options([
+                                'users' => 'Users',
+                                'everyone' => 'Everyone',
+                                'public' => 'Public',
+                            ]),
                     ]),
-                ]),
-                Forms\Components\ColorPicker::make('bg_color')->label('Background Color'),
+
+                Forms\Components\ColorPicker::make('bg_color')
+                    ->label('Background Color'),
+
                 Forms\Components\Checkbox::make('is_active'),
             ]);
     }
@@ -91,9 +113,9 @@ class NavigationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index'  => Pages\ListNavigations::route('/'),
+            'index' => Pages\ListNavigations::route('/'),
             'create' => Pages\CreateNavigation::route('/create'),
-            'edit'   => Pages\EditNavigation::route('/{record}/edit'),
+            'edit' => Pages\EditNavigation::route('/{record}/edit'),
         ];
     }
 }

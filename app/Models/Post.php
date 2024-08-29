@@ -16,10 +16,10 @@ class Post extends Model implements HasMedia
         'title',
         'slug',
         'content',
-        'meta_description',
         'is_published',
-        'is_featured',
+        'meta_description',
         'user_id',
+        'is_featured',
     ];
 
     public $casts = ['content' => 'array'];

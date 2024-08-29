@@ -14,6 +14,9 @@ class Category extends Model implements HasMedia
         'name',
         'slug',
         'content',
-        'parent_id',
+//        'parent_id',
+        'bg_color',
+        'text_color',
+        'meta_description'
     ];
 }

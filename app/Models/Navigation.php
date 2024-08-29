@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Navigation extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'items',
         'bg_color',
