@@ -8,11 +8,14 @@
         "php": "^8.2",
         "bezhansalleh/filament-shield": "^3.2",
         "filament/filament": "^3.2",
+        "filament/spatie-laravel-media-library-plugin": "^3.2",
         "joaopaulolndev/filament-general-settings": "^1.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "okeonline/filament-archivable": "^1.1",
         "pxlrbt/filament-spotlight": "^1.2",
+        "sakanjo/filament-reset-action": "^1.0",
+        "spatie/laravel-medialibrary": "^11.9",
         "swisnl/filament-backgrounds": "^1.1"
     },
     "require-dev": {
