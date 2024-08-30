@@ -20,12 +20,32 @@ class PostResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
+    public function getTabs(): array
+    {
+        $tabs = [];
+
+        $tabs[] = Tab::make('All Tasks')
+            // Add badge to the tab
+            ->badge(Task::count());
+        // No need to modify the query as we want to show all tasks
+
+        return $tabs;
+    }
+    
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Tabs::make('post')->tabs([
                     Tab::make('Content')->schema([
+
+                        // load indicator
+//                        Forms\Components\DatePicker::make('date')
+//                            ->native(false)
+//                            // ... more methods
+//                            ->hint(new \Illuminate\Support\HtmlString(\Illuminate\Support\Facades\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="data.date" />')))
+//                            ->live(),
+
                         Forms\Components\TextInput::make('title')
                             ->required()
                             ->minLength(2)
@@ -93,7 +113,7 @@ class PostResource extends Resource
 
                 Tables\Columns\CheckboxColumn::make('is_featured'),
 
-                Tables\Columns\CheckboxColumn::make('is_published'),
+                Tables\Columns\CheckboxColumn::make('is_published')
 
                 //                Tables\Columns\TextColumn::make('created_at')
                 //                    ->dateTime()
@@ -133,9 +153,62 @@ class PostResource extends Resource
                 ->slideOver()
             )
 
+//            ->actions([
+//                Tables\Actions\EditAction::make(),
+//                Tables\Actions\DeleteAction::make(),
+//            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make()
+                        ->hidden(fn($record) => $record->trashed()),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\RestoreAction::make(),
+//                    Tables\Actions\Action::make('Move to Stage')
+//                        ->hidden(fn($record) => $record->trashed())
+//                        ->icon('heroicon-m-pencil-square')
+//                        ->form([
+//
+//                            Forms\Components\Textarea::make('notes')
+//                                ->label('Notes')
+//                        ])
+//                        ->action(function (Customer $customer, array $data): void {
+//                            $customer->pipeline_stage_id = $data['pipeline_stage_id'];
+//                            $customer->save();
+//
+//                            $customer->pipelineStageLogs()->create([
+//                                'pipeline_stage_id' => $data['pipeline_stage_id'],
+//                                'notes' => $data['notes'],
+//                                'user_id' => auth()->id()
+//                            ]);
+//
+//                            Notification::make()
+//                                ->title('Customer Pipeline Updated')
+//                                ->success()
+//                                ->send();
+//                        }),
+//                    Tables\Actions\Action::make('Add Task')
+//                        ->icon('heroicon-s-clipboard-document')
+//                        ->form([
+//                            Forms\Components\RichEditor::make('description')
+//                                ->required(),
+//                            Forms\Components\Select::make('user_id')
+//                                ->preload()
+//                                ->searchable()
+//                                ->relationship('employee', 'name'),
+//                            Forms\Components\DatePicker::make('due_date')
+//                                ->native(false),
+//
+//                        ])
+//                        ->action(function (Customer $customer, array $data) {
+//                            $customer->tasks()->create($data);
+//
+//                            Notification::make()
+//                                ->title('Task created successfully')
+//                                ->success()
+//                                ->send();
+//                        }),
+
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

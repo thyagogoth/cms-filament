@@ -78,6 +78,17 @@ class UserResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make(__('Export'))
+                        ->icon('heroicon-m-arrow-down-tray')
+                        ->openUrlInNewTab()
+                        ->deselectRecordsAfterCompletion()
+                        ->action(function (\Illuminate\Support\Collection $records) {
+                            return response()->streamDownload(function () use ($records) {
+                                echo \Barryvdh\DomPDF\Facade\Pdf::loadHTML(
+                                    \Illuminate\Support\Facades\Blade::render('pdf', ['records' => $records])
+                                )->stream();
+                            }, 'Report_Users_'.uniqId().'.pdf');
+                        }),
                 ]),
             ]);
     }
