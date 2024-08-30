@@ -17,6 +17,7 @@
         "okeonline/filament-archivable": "^1.1",
         "pxlrbt/filament-spotlight": "^1.2",
         "sakanjo/filament-reset-action": "^1.0",
+        "schmeits/filament-character-counter": "^1.3",
         "spatie/laravel-medialibrary": "^11.9",
         "swisnl/filament-backgrounds": "^1.1"
     },

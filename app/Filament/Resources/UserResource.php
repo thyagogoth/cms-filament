@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\{Forms, Tables};
+use Schmeits\FilamentCharacterCounter\Forms\Components\TextInput;
 
 class UserResource extends Resource
 {
@@ -19,19 +20,26 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
+            \Schmeits\FilamentCharacterCounter\Forms\Components\TextInput::make('name')
+                ->required()
+                ->maxLength(120)
+                ->characterLimit(120),
+//                ->showInsideControl(true),
+
+                \Schmeits\FilamentCharacterCounter\Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(120)
+                    ->characterLimit(120),
+
                 Forms\Components\DateTimePicker::make('email_verified_at'),
+
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('custom_fields'),
+
                 Forms\Components\TextInput::make('avatar_url')
                     ->maxLength(255),
 
