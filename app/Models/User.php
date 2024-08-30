@@ -4,24 +4,22 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
-use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\{FilamentUser, HasAvatar};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\{HasMany};
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, HasMedia
+class User extends Authenticatable implements HasAvatar, FilamentUser
 {
     use HasFactory;
-    use HasRoles;
     use Notifiable;
+    use HasRoles;
     use HasPanelShield;
-    use InteractsWithMedia;
 
+    private bool $is_admin = false;
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +30,7 @@ class User extends Authenticatable implements FilamentUser, HasMedia
         'name',
         'email',
         'password',
+        'avatar_url',
     ];
 
     /**
@@ -54,28 +53,28 @@ class User extends Authenticatable implements FilamentUser, HasMedia
         return [
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
+            'custom_fields'     => 'array',
         ];
     }
-
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array<int, string>
-     */
-    protected $appends = [
-        'profile_photo_url',
-    ];
 
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
     }
 
-    public function getProfilePhotoUrlAttribute(): string
+    public function isAdmin(): bool
     {
-        return $this->avatar
-            ? Storage::url($this->avatar)
-            : 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=200&d=identicon';
+        return $this->is_admin;
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar_url ? Storage::url("$this->avatar_url") : null;
+    }
+
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        return auth()->check();
     }
 
 }

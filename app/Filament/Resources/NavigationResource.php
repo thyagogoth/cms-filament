@@ -43,9 +43,9 @@ class NavigationResource extends Resource
 
                         Forms\Components\Select::make('show_for')
                             ->options([
-                                'users' => 'Users',
+                                'users'    => 'Users',
                                 'everyone' => 'Everyone',
-                                'public' => 'Public',
+                                'public'   => 'Public',
                             ]),
                     ]),
 
@@ -70,9 +70,9 @@ class NavigationResource extends Resource
 
                         Forms\Components\Select::make('show_for')
                             ->options([
-                                'users' => 'Users',
+                                'users'    => 'Users',
                                 'everyone' => 'Everyone',
-                                'public' => 'Public',
+                                'public'   => 'Public',
                             ]),
                     ]),
 
@@ -113,9 +113,9 @@ class NavigationResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListNavigations::route('/'),
+            'index'  => Pages\ListNavigations::route('/'),
             'create' => Pages\CreateNavigation::route('/create'),
-            'edit' => Pages\EditNavigation::route('/{record}/edit'),
+            'edit'   => Pages\EditNavigation::route('/{record}/edit'),
         ];
     }
 }

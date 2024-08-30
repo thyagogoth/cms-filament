@@ -44,10 +44,10 @@ class CategoryResource extends Resource
                 Forms\Components\RichEditor::make('content')
                     ->columnSpanFull(),
 
-//                Forms\Components\Select::make('parent_id')
-//                    ->options(fn () => \App\Models\Category::query()->pluck('name', 'id'))
-//                    ->nullable()
-//                    ->columnSpan(2),
+                //                Forms\Components\Select::make('parent_id')
+                //                    ->options(fn () => \App\Models\Category::query()->pluck('name', 'id'))
+                //                    ->nullable()
+                //                    ->columnSpan(2),
 
                 Forms\Components\ColorPicker::make('bg_color')
                     ->label('Background Color'),
@@ -57,7 +57,7 @@ class CategoryResource extends Resource
                 Forms\Components\SpatieMediaLibraryFileUpload::make('cover')
                     ->image()
                     ->imageEditor()
-                    ->multiple()
+                    ->multiple(),
             ]);
     }
 
@@ -70,28 +70,29 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
 
-//                Tables\Columns\TextColumn::make('parent_id')
-//                    ->searchable(),
+                //                Tables\Columns\TextColumn::make('parent_id')
+                //                    ->searchable(),
 
                 Tables\Columns\ColorColumn::make('bg_color'),
                 Tables\Columns\ColorColumn::make('text_color'),
 
-//                Tables\Columns\TextColumn::make('archived_at')
-//                    ->dateTime()
-//                    ->sortable(),
+                //                Tables\Columns\TextColumn::make('archived_at')
+                //                    ->dateTime()
+                //                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-//                Tables\Columns\TextColumn::make('updated_at')
-//                    ->dateTime()
-//                    ->sortable()
-//                    ->toggleable(isToggledHiddenByDefault: true),
+                //                Tables\Columns\TextColumn::make('updated_at')
+                //                    ->dateTime()
+                //                    ->sortable()
+                //                    ->toggleable(isToggledHiddenByDefault: true),
 
             ])
             ->filters([
             ])
-            ->filtersTriggerAction(fn (\Filament\Tables\Actions\Action $action) => $action
+            ->filtersTriggerAction(
+                fn (\Filament\Tables\Actions\Action $action) => $action
                 ->icon('heroicon-s-adjustments-vertical') // Altere o ícone aqui
                 ->label('Filtrar registros') // Texto opcional
                 ->slideOver()

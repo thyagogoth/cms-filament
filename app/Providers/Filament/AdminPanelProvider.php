@@ -8,6 +8,7 @@ use Closure;
 use Filament\Http\Middleware\{Authenticate, DisableBladeIconComponents, DispatchServingFilamentEvent};
 use Filament\Support\Colors\Color;
 use Filament\{Forms\Components\Field,
+    Navigation\MenuItem,
     Navigation\NavigationBuilder,
     Navigation\NavigationGroup,
     Pages,
@@ -21,6 +22,8 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\{AuthenticateSession, StartSession};
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use InvalidArgumentException;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 use Joaopaulolndev\FilamentGeneralSettings\FilamentGeneralSettingsPlugin;
 use Okeonline\FilamentArchivable\FilamentArchivablePlugin;
 use pxlrbt\FilamentSpotlight\SpotlightPlugin;
@@ -34,10 +37,11 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->bootUsing(fn() => $this->bootUsing())
+            ->bootUsing(fn () => $this->bootUsing())
             ->default()
             ->id('admin')
             ->path('admin')
+            ->databaseNotifications()
             ->login()
             ->colors(['primary' => $this->getColor('gray'), ])
             ->discoverResources(
@@ -54,25 +58,32 @@ class AdminPanelProvider extends PanelProvider
             ->widgets($this->getWidgets())
             ->middleware($this->getMiddleware())
             ->authMiddleware($this->getAuthMiddleware())
-            ->plugins($this->getPlugins());
+            ->plugins($this->getPlugins())
+            ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->label(fn () => auth()->user()->name ?? 'Profile')
+                    ->url(fn (): string => EditProfilePage::getUrl())
+                    ->icon('heroicon-m-user-circle'),
+            ])
+            ->viteTheme('resources/css/filament/admin/theme.css');
     }
 
     private function bootUsing(): void
     {
 
-//        \Filament\Facades\Filament::serving(function () {
-////            \Filament\Facades\Filament::notify('Você foi autenticado com sucesso!');
-//            \Filament\Notifications\Notification::make()
-//                ->title('Operação realizada com sucesso!')
-//                ->success()
-//                ->send();
-//        });
+        //        \Filament\Facades\Filament::serving(function () {
+        ////            \Filament\Facades\Filament::notify('Você foi autenticado com sucesso!');
+        //            \Filament\Notifications\Notification::make()
+        //                ->title('Operação realizada com sucesso!')
+        //                ->success()
+        //                ->send();
+        //        });
 
-        Field::configureUsing( function(Field $field) {
+        Field::configureUsing(function (Field $field) {
             $field->translateLabel();
         });
 
-       Column::configureUsing( function(Column $column) {
+        Column::configureUsing(function (Column $column) {
             $column->translateLabel();
         });
     }
@@ -185,6 +196,7 @@ class AdminPanelProvider extends PanelProvider
             $this->initLoginBackgroundImagePlugin(),
             $this->initSpotlightPlugin(),
             $this->initShieldPlugin(),
+            $this->initEditProfilePlugin(),
         ];
     }
 
@@ -219,6 +231,26 @@ class AdminPanelProvider extends PanelProvider
     protected function initSpotlightPlugin(): SpotlightPlugin
     {
         return SpotlightPlugin::make();
+    }
+
+    // Edit Profile Plugin | https://filamentphp.com/plugins/joaopaulolndev-edit-profile#installation
+    protected function initEditProfilePlugin(): FilamentEditProfilePlugin
+    {
+        return FilamentEditProfilePlugin::make()
+            ->slug('my-profile')
+//            ->setTitle('Meu perfil')
+//            ->setNavigationLabel('Meu perfil')
+//            ->setNavigationGroup('Minha Conta')
+            ->shouldRegisterNavigation(false)
+            ->setIcon('heroicon-o-user')
+            ->setSort(10)
+            ->shouldShowBrowserSessionsForm(true)
+            ->shouldShowDeleteAccountForm(false)
+            ->shouldShowAvatarForm(
+                value: true,
+                directory: 'avatars',
+                rules: 'mimes:jpeg,png|max:1024',
+            );
     }
 
     // Shield Plugin | https://filamentphp.com/plugins/bezhansalleh-shield#installation

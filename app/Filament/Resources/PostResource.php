@@ -4,13 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PostResource\Pages;
 use App\Models\Post;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\{Forms, Tables};
-use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class PostResource extends Resource
 {
@@ -124,9 +124,10 @@ class PostResource extends Resource
                     ->multiple()
                     ->relationship('categories', 'name'),
 
-                Tables\Filters\TrashedFilter::make()
+                Tables\Filters\TrashedFilter::make(),
             ], Tables\Enums\FiltersLayout::Dropdown)
-            ->filtersTriggerAction(fn (\Filament\Tables\Actions\Action $action) => $action
+            ->filtersTriggerAction(
+                fn (\Filament\Tables\Actions\Action $action) => $action
                 ->icon('heroicon-s-adjustments-vertical') // Altere o ícone aqui
                 ->label('Filtrar registros') // Texto opcional
                 ->slideOver()
