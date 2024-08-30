@@ -17,6 +17,7 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "okeonline/filament-archivable": "^1.1",
+        "pxlrbt/filament-excel": "^2.3",
         "pxlrbt/filament-spotlight": "^1.2",
         "sakanjo/filament-reset-action": "^1.0",
         "schmeits/filament-character-counter": "^1.3",

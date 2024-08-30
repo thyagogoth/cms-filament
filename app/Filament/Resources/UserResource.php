@@ -8,7 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\{Forms, Tables};
-use Schmeits\FilamentCharacterCounter\Forms\Components\TextInput;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class UserResource extends Resource
 {
@@ -98,7 +98,11 @@ class UserResource extends Resource
                                 )->stream();
                             }, 'Report_Users_'.uniqId().'.pdf');
                         }),
+                    ExportBulkAction::make('export')
+                        ->label('Exportar Excel')
+                        ->deselectRecordsAfterCompletion(),
                 ]),
+
             ]);
     }
 
