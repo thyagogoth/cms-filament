@@ -66,9 +66,9 @@ class AdminPanelProvider extends PanelProvider
                     ->label(fn () => auth()->user()->name ?? 'Profile')
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle'),
-            ])
+            ]);
             // ->theme(new HtmlString('resources/css/themes/filament/classic/index.css'));
-            ->viteTheme('resources/css/themes/filament/classic.css');
+            // ->viteTheme('resources/css/themes/filament/classic.css');
             // ->viteTheme('resources/css/filament/admin/theme.css');
     }
 
@@ -189,6 +189,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return [
             Authenticate::class,
+            \Hasnayeen\Themes\Http\Middleware\SetTheme::class
         ];
     }
 
@@ -202,7 +203,7 @@ class AdminPanelProvider extends PanelProvider
             $this->initShieldPlugin(),
             $this->initEditProfilePlugin(),
             $this->initEnvironmentEditorPlugin(),
-            \Filapanel\ClassicTheme\ClassicThemePlugin::make(),
+            $this->initThemeManagementPlugin(),
         ];
     }
 
@@ -276,5 +277,11 @@ class AdminPanelProvider extends PanelProvider
             ->navigationIcon('heroicon-o-cog-8-tooth')
             ->navigationSort(1)
             ->slug('env-editor');
+    }
+
+    // Theme Management Plugin | https://filamentphp.com/plugins/hasnayeen-themes#installation
+    protected function initThemeManagementPlugin(): \Hasnayeen\Themes\ThemesPlugin
+    {
+        return \Hasnayeen\Themes\ThemesPlugin::make();
     }
 }
