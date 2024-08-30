@@ -31,7 +31,7 @@ class PostResource extends Resource
 
         return $tabs;
     }
-    
+
     public static function form(Form $form): Form
     {
         return $form
