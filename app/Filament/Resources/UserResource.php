@@ -38,6 +38,7 @@ class UserResource extends Resource
                     ->password()
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\TextInput::make('custom_fields'),
 
                 Forms\Components\TextInput::make('avatar_url')
@@ -48,7 +49,7 @@ class UserResource extends Resource
                     ->multiple()
                     ->preload()
                     ->searchable()
-                    ->required(),
+                    ->required()
             ]);
     }
 

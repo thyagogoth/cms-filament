@@ -43,7 +43,7 @@ class PostResource extends Resource
 //                        Forms\Components\DatePicker::make('date')
 //                            ->native(false)
 //                            // ... more methods
-//                            ->hint(new \Illuminate\Support\HtmlString(\Illuminate\Support\Facades\Blade::render('<x-filament::loading-indicator class="h-5 w-5" wire:loading wire:target="data.date" />')))
+//                            ->hint(new \Illuminate\Support\HtmlString(\Illuminate\Support\Facades\Blade::render('<x-filament::loading-indicator class="w-5 h-5" wire:loading wire:target="data.date" />')))
 //                            ->live(),
 
                         Forms\Components\TextInput::make('title')

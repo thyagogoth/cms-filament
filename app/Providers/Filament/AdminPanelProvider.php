@@ -21,6 +21,7 @@ use Illuminate\Cookie\Middleware\{AddQueuedCookiesToResponse, EncryptCookies};
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\{AuthenticateSession, StartSession};
+use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use InvalidArgumentException;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
@@ -66,7 +67,9 @@ class AdminPanelProvider extends PanelProvider
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle'),
             ])
-            ->viteTheme('resources/css/filament/admin/theme.css');
+            // ->theme(new HtmlString('resources/css/themes/filament/classic/index.css'));
+            ->viteTheme('resources/css/themes/filament/classic.css');
+            // ->viteTheme('resources/css/filament/admin/theme.css');
     }
 
     private function bootUsing(): void
@@ -199,6 +202,7 @@ class AdminPanelProvider extends PanelProvider
             $this->initShieldPlugin(),
             $this->initEditProfilePlugin(),
             $this->initEnvironmentEditorPlugin(),
+            \Filapanel\ClassicTheme\ClassicThemePlugin::make(),
         ];
     }
 

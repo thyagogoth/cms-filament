@@ -10,6 +10,7 @@
         "bezhansalleh/filament-shield": "^3.2",
         "filament/filament": "^3.2",
         "filament/spatie-laravel-media-library-plugin": "^3.2",
+        "filapanel/classic-theme": "^1.0",
         "geo-sot/filament-env-editor": "^0.0.4",
         "joaopaulolndev/filament-edit-profile": "^1.0",
         "joaopaulolndev/filament-general-settings": "^1.0",
@@ -78,5 +79,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "filapanel/classic-theme": {
+            "type": "composer",
+            "url": "https://classic-theme.filapanel.com"
+        }
+    }
 }
