@@ -16,6 +16,7 @@ use Filament\{Forms\Components\Field,
     PanelProvider,
     Tables\Columns\Column,
     Widgets};
+use GeoSot\FilamentEnvEditor\FilamentEnvEditorPlugin;
 use Illuminate\Cookie\Middleware\{AddQueuedCookiesToResponse, EncryptCookies};
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -197,6 +198,7 @@ class AdminPanelProvider extends PanelProvider
             $this->initSpotlightPlugin(),
             $this->initShieldPlugin(),
             $this->initEditProfilePlugin(),
+            $this->initEnvironmentEditorPlugin(),
         ];
     }
 
@@ -211,9 +213,8 @@ class AdminPanelProvider extends PanelProvider
     {
         return FilamentGeneralSettingsPlugin::make()
             ->setIcon('heroicon-o-cog')
-            ->setNavigationGroup('Settings')
-            ->setTitle('General Settings')
-            ->setNavigationLabel('General Settings');
+            ->setNavigationGroup(__('Settings'))
+            ->setTitle(__('General Settings'));
     }
 
     // image Dashboard Background plugin | https://filamentphp.com/plugins/swisnl-backgrounds#installation
@@ -238,9 +239,9 @@ class AdminPanelProvider extends PanelProvider
     {
         return FilamentEditProfilePlugin::make()
             ->slug('my-profile')
-//            ->setTitle('Meu perfil')
-//            ->setNavigationLabel('Meu perfil')
-//            ->setNavigationGroup('Minha Conta')
+        //  ->setTitle('Meu perfil')
+        //  ->setNavigationLabel('Meu perfil')
+        //  ->setNavigationGroup('Minha Conta')
             ->shouldRegisterNavigation(false)
             ->setIcon('heroicon-o-user')
             ->setSort(10)
@@ -257,5 +258,19 @@ class AdminPanelProvider extends PanelProvider
     protected function initShieldPlugin(): FilamentShieldPlugin
     {
         return FilamentShieldPlugin::make();
+    }
+
+    // Environment Editor Plugin | https://filamentphp.com/plugins/pxlrbt-environment-editor#installation
+    protected function initEnvironmentEditorPlugin(): FilamentEnvEditorPlugin
+    {
+        return FilamentEnvEditorPlugin::make()
+            ->authorize(
+                // fn () => auth()->user()->isAdmin()
+            )
+            ->navigationGroup(__('Settings'))
+            ->navigationLabel(__('Environment Editor'))
+            ->navigationIcon('heroicon-o-cog-8-tooth')
+            ->navigationSort(1)
+            ->slug('env-editor');
     }
 }

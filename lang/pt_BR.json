@@ -26,6 +26,12 @@
     "Title": "Título",
     "Meta description": "Meta Descrição",
     "Export": "Exportar",
+    "Settings": "Configurações",
+    "Environment": "Ambiente",
+    "Environment Editor": "Editor de Ambiente",
+    "General Settings": "Configurações Gerais",
+    "Clear caches": "Limpar caches",
+    "Add new Entry": "Adicionar novo Registro",
 
     "Background Color": "Cor de Fundo",
     "Open in new tab": "Abrir em nova aba",
