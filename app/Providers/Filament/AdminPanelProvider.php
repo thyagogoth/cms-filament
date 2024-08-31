@@ -209,6 +209,7 @@ class AdminPanelProvider extends PanelProvider
 
             \TomatoPHP\FilamentArtisan\FilamentArtisanPlugin::make(),
 
+//            https://filamentphp.com/plugins/3x1io-tomato-browser
             \TomatoPHP\FilamentBrowser\FilamentBrowserPlugin::make()
                 ->hiddenFolders([
 //                    base_path(),
