@@ -2,7 +2,8 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Resources\{CategoryResource, NavigationResource, PostResource};
+use App\Filament\BKP\NavigationResource;
+use App\Filament\Resources\{CategoryResource, PostResource};
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Closure;
 use Filament\Http\Middleware\{Authenticate, DisableBladeIconComponents, DispatchServingFilamentEvent};
@@ -101,20 +102,20 @@ class AdminPanelProvider extends PanelProvider
     {
         return function (NavigationBuilder $builder): NavigationBuilder {
             return $builder->groups([
-                NavigationGroup::make('Shop')->items([
-                    //                        ...\App\Filament\Resources\OrderResource::getNavigationItems(),
-                    //                        ...\App\Filament\Resources\ProductResource::getNavigationItems(),
-                    //                        ...\App\Filament\Resources\StockResource::getNavigationItems(),
-                    //                        ...\App\Filament\Resources\ShippingTypeResource::getNavigationItems(),
-                ]),
+//                NavigationGroup::make('Shop')->items([
+//                    ...\App\Filament\Resources\OrderResource::getNavigationItems(),
+//                    ...\App\Filament\Resources\ProductResource::getNavigationItems(),
+//                    ...\App\Filament\Resources\StockResource::getNavigationItems(),
+//                    ...\App\Filament\Resources\ShippingTypeResource::getNavigationItems(),
+//                ]),
                 NavigationGroup::make('Content')->items([
                     ...PostResource::getNavigationItems(),
                     ...CategoryResource::getNavigationItems(),
-                    ...NavigationResource::getNavigationItems(),
+//                    ...NavigationResource::getNavigationItems(),
                 ]),
-                NavigationGroup::make('Users & Roles')->items([
-                    //                        ...UserResource::getNavigationItems()
-                ]),
+//                NavigationGroup::make('Users & Roles')->items([
+//                    ...UserResource::getNavigationItems()
+//                ]),
             ]);
         };
     }
@@ -203,6 +204,7 @@ class AdminPanelProvider extends PanelProvider
             $this->initShieldPlugin(),
             $this->initEditProfilePlugin(),
             $this->initEnvironmentEditorPlugin(),
+            $this->initEnvironmentIndicatorPlugin(),
             $this->initThemeManagementPlugin(),
         ];
     }
@@ -279,6 +281,13 @@ class AdminPanelProvider extends PanelProvider
             ->slug('env-editor');
     }
 
+    // Environment Indicator Plugin | https://filamentphp.com/plugins/pxlrbt-environment-indicator#installation
+    protected function initEnvironmentIndicatorPlugin(): \pxlrbt\FilamentEnvironmentIndicator\EnvironmentIndicatorPlugin
+    {
+        return \pxlrbt\FilamentEnvironmentIndicator\EnvironmentIndicatorPlugin::make()
+            ->showBadge(true)
+            ->showBorder(true);
+    }
     // Theme Management Plugin | https://filamentphp.com/plugins/hasnayeen-themes#installation
     protected function initThemeManagementPlugin(): \Hasnayeen\Themes\ThemesPlugin
     {

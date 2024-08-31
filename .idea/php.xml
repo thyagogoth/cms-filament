@@ -194,6 +194,17 @@
       <path value="$PROJECT_DIR$/vendor/sabberworm/php-css-parser" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-dompdf" />
       <path value="$PROJECT_DIR$/vendor/schmeits/filament-character-counter" />
+      <path value="$PROJECT_DIR$/vendor/juliomotol/filament-password-confirmation" />
+      <path value="$PROJECT_DIR$/vendor/hasnayeen/themes" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/vendor/geo-sot/laravel-env-editor" />
+      <path value="$PROJECT_DIR$/vendor/geo-sot/filament-env-editor" />
+      <path value="$PROJECT_DIR$/vendor/maatwebsite/excel" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/pxlrbt/filament-excel" />
+      <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/vendor/pxlrbt/filament-environment-indicator" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
