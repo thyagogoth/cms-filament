@@ -199,6 +199,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/tomatophp/console-helpers" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tomatophp/filament-artisan" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tomatophp/filament-developer-gate" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/creagia/filament-code-field" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mallardduck/blade-boxicons" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tomatophp/filament-browser" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

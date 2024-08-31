@@ -208,6 +208,29 @@ class AdminPanelProvider extends PanelProvider
             $this->initThemeManagementPlugin(),
 
             \TomatoPHP\FilamentArtisan\FilamentArtisanPlugin::make(),
+
+            \TomatoPHP\FilamentBrowser\FilamentBrowserPlugin::make()
+                ->hiddenFolders([
+//                    base_path(),
+//                    base_path('lang'),
+
+                ])
+                ->hiddenFiles([
+                    base_path('.env')
+                ])
+                ->hiddenExtantions([
+                    "php"
+                ])
+                ->allowCreateFolder()
+                ->allowEditFile()
+                ->allowCreateNewFile()
+                ->allowCreateFolder()
+                ->allowRenameFile()
+                ->allowDeleteFile()
+                ->allowMarkdown()
+                ->allowCode()
+                ->allowPreview()
+                ->basePath(storage_path())
         ];
     }
 

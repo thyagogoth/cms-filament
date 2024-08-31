@@ -209,6 +209,9 @@
       <path value="$PROJECT_DIR$/vendor/tomatophp/filament-developer-gate" />
       <path value="$PROJECT_DIR$/vendor/tomatophp/console-helpers" />
       <path value="$PROJECT_DIR$/vendor/tomatophp/filament-artisan" />
+      <path value="$PROJECT_DIR$/vendor/creagia/filament-code-field" />
+      <path value="$PROJECT_DIR$/vendor/mallardduck/blade-boxicons" />
+      <path value="$PROJECT_DIR$/vendor/tomatophp/filament-browser" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
