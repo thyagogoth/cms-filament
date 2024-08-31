@@ -195,6 +195,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/phpoffice/phpspreadsheet" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pxlrbt/filament-environment-indicator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/pxlrbt/filament-excel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/calebporzio/sushi" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tomatophp/console-helpers" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tomatophp/filament-artisan" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tomatophp/filament-developer-gate" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

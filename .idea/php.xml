@@ -205,6 +205,10 @@
       <path value="$PROJECT_DIR$/vendor/pxlrbt/filament-excel" />
       <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
       <path value="$PROJECT_DIR$/vendor/pxlrbt/filament-environment-indicator" />
+      <path value="$PROJECT_DIR$/vendor/calebporzio/sushi" />
+      <path value="$PROJECT_DIR$/vendor/tomatophp/filament-developer-gate" />
+      <path value="$PROJECT_DIR$/vendor/tomatophp/console-helpers" />
+      <path value="$PROJECT_DIR$/vendor/tomatophp/filament-artisan" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

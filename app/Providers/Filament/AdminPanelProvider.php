@@ -206,6 +206,8 @@ class AdminPanelProvider extends PanelProvider
             $this->initEnvironmentEditorPlugin(),
             $this->initEnvironmentIndicatorPlugin(),
             $this->initThemeManagementPlugin(),
+
+            \TomatoPHP\FilamentArtisan\FilamentArtisanPlugin::make(),
         ];
     }
 
