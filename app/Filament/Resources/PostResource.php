@@ -113,23 +113,17 @@ class PostResource extends Resource
 
                 Tables\Columns\CheckboxColumn::make('is_featured'),
 
-                Tables\Columns\CheckboxColumn::make('is_published')
+                Tables\Columns\CheckboxColumn::make('is_published'),
 
-                //                Tables\Columns\TextColumn::make('created_at')
-                //                    ->dateTime()
-                //                    ->sortable()
-                //                    ->toggleable(isToggledHiddenByDefault: true),
-                //                Tables\Columns\TextColumn::make('updated_at')
-                //                    ->dateTime()
-                //                    ->sortable()
-                //                    ->toggleable(isToggledHiddenByDefault: true),
-                //                Tables\Columns\TextColumn::make('archived_at')
-                //                    ->dateTime()
-                //                    ->sortable(),
-                //                Tables\Columns\TextColumn::make('deleted_at')
-                //                    ->dateTime()
-                //                    ->sortable()
-                //                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->date('d/m/Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->date('d/m/Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\Filter::make('is_featured')

@@ -65,9 +65,11 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')->stacked(),
+                Tables\Columns\SpatieMediaLibraryImageColumn::make('thumbnail')
+                    ->stacked(),
 
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
 
                 //                Tables\Columns\TextColumn::make('parent_id')

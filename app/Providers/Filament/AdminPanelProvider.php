@@ -40,13 +40,12 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->bootUsing(fn () => $this->bootUsing())
-            ->default()
             ->id('admin')
             ->path('admin')
-            ->databaseNotifications()
-            ->login()
-            ->colors(['primary' => $this->getColor('gray'), ])
+
+            ->bootUsing(fn () => $this->bootUsing())
+            ->default()
+
             ->discoverResources(
                 in: app_path('Filament/Resources'),
                 for: 'App\\Filament\\Resources'
@@ -55,10 +54,20 @@ class AdminPanelProvider extends PanelProvider
                 in: app_path('Filament/Pages'),
                 for: 'App\\Filament\\Pages'
             )
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+
+            ->widgets($this->getWidgets())
+
+            ->sidebarCollapsibleOnDesktop()
+            ->databaseNotifications()
+
+            ->login()
+
+            ->colors(['primary' => $this->getColor('gray'), ])
+
             ->navigation($this->getNavigation())
             ->pages($this->getPages())
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets($this->getWidgets())
+
             ->middleware($this->getMiddleware())
             ->authMiddleware($this->getAuthMiddleware())
             ->plugins($this->getPlugins())
@@ -214,14 +223,13 @@ class AdminPanelProvider extends PanelProvider
                 ->hiddenFolders([
 //                    base_path(),
 //                    base_path('lang'),
-
                 ])
                 ->hiddenFiles([
                     base_path('.env')
                 ])
-                ->hiddenExtantions([
-                    "php"
-                ])
+//                ->hiddenExtantions([
+//                    "php"
+//                ])
                 ->allowCreateFolder()
                 ->allowEditFile()
                 ->allowCreateNewFile()
@@ -231,7 +239,7 @@ class AdminPanelProvider extends PanelProvider
                 ->allowMarkdown()
                 ->allowCode()
                 ->allowPreview()
-                ->basePath(storage_path())
+                ->basePath(base_path())
         ];
     }
 
