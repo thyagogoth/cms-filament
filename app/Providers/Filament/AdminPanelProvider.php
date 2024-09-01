@@ -39,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
 
     public function panel(Panel $panel): Panel
     {
+        
         return $panel
             ->id('admin')
             ->path('admin')
@@ -301,6 +302,7 @@ class AdminPanelProvider extends PanelProvider
             ->showBadge(true)
             ->showBorder(true);
     }
+
     // Theme Management Plugin | https://filamentphp.com/plugins/hasnayeen-themes#installation
     protected function initThemeManagementPlugin(): \Hasnayeen\Themes\ThemesPlugin
     {
