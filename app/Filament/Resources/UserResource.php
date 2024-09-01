@@ -25,11 +25,11 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-            \Schmeits\FilamentCharacterCounter\Forms\Components\TextInput::make('name')
-                ->required()
-                ->maxLength(120)
-                ->characterLimit(120),
-//                ->showInsideControl(true),
+                \Schmeits\FilamentCharacterCounter\Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(120)
+                    ->characterLimit(120),
+                //                ->showInsideControl(true),
 
                 \Schmeits\FilamentCharacterCounter\Forms\Components\TextInput::make('email')
                     ->email()
@@ -54,7 +54,7 @@ class UserResource extends Resource
                     ->multiple()
                     ->preload()
                     ->searchable()
-                    ->required()
+                    ->required(),
             ]);
     }
 
@@ -89,7 +89,7 @@ class UserResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make(),
-                ])
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -103,7 +103,7 @@ class UserResource extends Resource
                                 echo \Barryvdh\DomPDF\Facade\Pdf::loadHTML(
                                     \Illuminate\Support\Facades\Blade::render('pdf', ['records' => $records])
                                 )->stream();
-                            }, 'Report_Users_'.uniqId().'.pdf');
+                            }, 'Report_Users_' . uniqId() . '.pdf');
                         }),
                     ExportBulkAction::make('export')
                         ->label('Exportar Excel')

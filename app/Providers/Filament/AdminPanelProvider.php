@@ -77,9 +77,9 @@ class AdminPanelProvider extends PanelProvider
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle'),
             ]);
-            // ->theme(new HtmlString('resources/css/themes/filament/classic/index.css'));
-            // ->viteTheme('resources/css/themes/filament/classic.css');
-            // ->viteTheme('resources/css/filament/admin/theme.css');
+        // ->theme(new HtmlString('resources/css/themes/filament/classic/index.css'));
+        // ->viteTheme('resources/css/themes/filament/classic.css');
+        // ->viteTheme('resources/css/filament/admin/theme.css');
     }
 
     private function bootUsing(): void
@@ -111,20 +111,20 @@ class AdminPanelProvider extends PanelProvider
     {
         return function (NavigationBuilder $builder): NavigationBuilder {
             return $builder->groups([
-//                NavigationGroup::make('Shop')->items([
-//                    ...\App\Filament\Resources\OrderResource::getNavigationItems(),
-//                    ...\App\Filament\Resources\ProductResource::getNavigationItems(),
-//                    ...\App\Filament\Resources\StockResource::getNavigationItems(),
-//                    ...\App\Filament\Resources\ShippingTypeResource::getNavigationItems(),
-//                ]),
+                //                NavigationGroup::make('Shop')->items([
+                //                    ...\App\Filament\Resources\OrderResource::getNavigationItems(),
+                //                    ...\App\Filament\Resources\ProductResource::getNavigationItems(),
+                //                    ...\App\Filament\Resources\StockResource::getNavigationItems(),
+                //                    ...\App\Filament\Resources\ShippingTypeResource::getNavigationItems(),
+                //                ]),
                 NavigationGroup::make('Content')->items([
                     ...PostResource::getNavigationItems(),
                     ...CategoryResource::getNavigationItems(),
-//                    ...NavigationResource::getNavigationItems(),
+                    //                    ...NavigationResource::getNavigationItems(),
                 ]),
-//                NavigationGroup::make('Users & Roles')->items([
-//                    ...UserResource::getNavigationItems()
-//                ]),
+                //                NavigationGroup::make('Users & Roles')->items([
+                //                    ...UserResource::getNavigationItems()
+                //                ]),
             ]);
         };
     }
@@ -199,7 +199,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return [
             Authenticate::class,
-            \Hasnayeen\Themes\Http\Middleware\SetTheme::class
+            \Hasnayeen\Themes\Http\Middleware\SetTheme::class,
         ];
     }
 
@@ -216,30 +216,9 @@ class AdminPanelProvider extends PanelProvider
             $this->initEnvironmentIndicatorPlugin(),
             $this->initThemeManagementPlugin(),
 
-            \TomatoPHP\FilamentArtisan\FilamentArtisanPlugin::make(),
+            $this->initFilamentArtisanPlugin(),
 
-//            https://filamentphp.com/plugins/3x1io-tomato-browser
-            \TomatoPHP\FilamentBrowser\FilamentBrowserPlugin::make()
-                ->hiddenFolders([
-//                    base_path(),
-//                    base_path('lang'),
-                ])
-                ->hiddenFiles([
-                    base_path('.env')
-                ])
-//                ->hiddenExtantions([
-//                    "php"
-//                ])
-                ->allowCreateFolder()
-                ->allowEditFile()
-                ->allowCreateNewFile()
-                ->allowCreateFolder()
-                ->allowRenameFile()
-                ->allowDeleteFile()
-                ->allowMarkdown()
-                ->allowCode()
-                ->allowPreview()
-                ->basePath(base_path())
+            $this->initFilamentBrowserPlugin(),
         ];
     }
 
@@ -326,5 +305,37 @@ class AdminPanelProvider extends PanelProvider
     protected function initThemeManagementPlugin(): \Hasnayeen\Themes\ThemesPlugin
     {
         return \Hasnayeen\Themes\ThemesPlugin::make();
+    }
+
+    // Artisan plugin
+    protected function initFilamentArtisanPlugin(): \TomatoPHP\FilamentArtisan\FilamentArtisanPlugin
+    {
+        return \TomatoPHP\FilamentArtisan\FilamentArtisanPlugin::make();
+    }
+
+    // Browser plugin |
+    protected function initFilamentBrowserPlugin(): \TomatoPHP\FilamentBrowser\FilamentBrowserPlugin
+    {
+        return  \TomatoPHP\FilamentBrowser\FilamentBrowserPlugin::make()
+            ->hiddenFolders([
+                //                    base_path(),
+                //                    base_path('lang'),
+            ])
+            ->hiddenFiles([
+                base_path('.env'),
+            ])
+//                ->hiddenExtantions([
+//                    "php"
+//                ])
+            ->allowCreateFolder()
+            ->allowEditFile()
+            ->allowCreateNewFile()
+            ->allowCreateFolder()
+            ->allowRenameFile()
+            ->allowDeleteFile()
+            ->allowMarkdown()
+            ->allowCode()
+            ->allowPreview()
+            ->basePath(base_path());
     }
 }

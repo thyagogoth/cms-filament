@@ -40,11 +40,11 @@ class PostResource extends Resource
                     Tab::make('Content')->schema([
 
                         // load indicator
-//                        Forms\Components\DatePicker::make('date')
-//                            ->native(false)
-//                            // ... more methods
-//                            ->hint(new \Illuminate\Support\HtmlString(\Illuminate\Support\Facades\Blade::render('<x-filament::loading-indicator class="w-5 h-5" wire:loading wire:target="data.date" />')))
-//                            ->live(),
+                        //                        Forms\Components\DatePicker::make('date')
+                        //                            ->native(false)
+                        //                            // ... more methods
+                        //                            ->hint(new \Illuminate\Support\HtmlString(\Illuminate\Support\Facades\Blade::render('<x-filament::loading-indicator class="w-5 h-5" wire:loading wire:target="data.date" />')))
+                        //                            ->live(),
 
                         Forms\Components\TextInput::make('title')
                             ->required()
@@ -154,55 +154,55 @@ class PostResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make()
-                        ->hidden(fn($record) => $record->trashed()),
+                        ->hidden(fn ($record) => $record->trashed()),
                     Tables\Actions\DeleteAction::make(),
                     Tables\Actions\RestoreAction::make(),
-//                    Tables\Actions\Action::make('Move to Stage')
-//                        ->hidden(fn($record) => $record->trashed())
-//                        ->icon('heroicon-m-pencil-square')
-//                        ->form([
-//
-//                            Forms\Components\Textarea::make('notes')
-//                                ->label('Notes')
-//                        ])
-//                        ->action(function (Customer $customer, array $data): void {
-//                            $customer->pipeline_stage_id = $data['pipeline_stage_id'];
-//                            $customer->save();
-//
-//                            $customer->pipelineStageLogs()->create([
-//                                'pipeline_stage_id' => $data['pipeline_stage_id'],
-//                                'notes' => $data['notes'],
-//                                'user_id' => auth()->id()
-//                            ]);
-//
-//                            Notification::make()
-//                                ->title('Customer Pipeline Updated')
-//                                ->success()
-//                                ->send();
-//                        }),
-//                    Tables\Actions\Action::make('Add Task')
-//                        ->icon('heroicon-s-clipboard-document')
-//                        ->form([
-//                            Forms\Components\RichEditor::make('description')
-//                                ->required(),
-//                            Forms\Components\Select::make('user_id')
-//                                ->preload()
-//                                ->searchable()
-//                                ->relationship('employee', 'name'),
-//                            Forms\Components\DatePicker::make('due_date')
-//                                ->native(false),
-//
-//                        ])
-//                        ->action(function (Customer $customer, array $data) {
-//                            $customer->tasks()->create($data);
-//
-//                            Notification::make()
-//                                ->title('Task created successfully')
-//                                ->success()
-//                                ->send();
-//                        }),
+                    //                    Tables\Actions\Action::make('Move to Stage')
+                    //                        ->hidden(fn($record) => $record->trashed())
+                    //                        ->icon('heroicon-m-pencil-square')
+                    //                        ->form([
+                    //
+                    //                            Forms\Components\Textarea::make('notes')
+                    //                                ->label('Notes')
+                    //                        ])
+                    //                        ->action(function (Customer $customer, array $data): void {
+                    //                            $customer->pipeline_stage_id = $data['pipeline_stage_id'];
+                    //                            $customer->save();
+                    //
+                    //                            $customer->pipelineStageLogs()->create([
+                    //                                'pipeline_stage_id' => $data['pipeline_stage_id'],
+                    //                                'notes' => $data['notes'],
+                    //                                'user_id' => auth()->id()
+                    //                            ]);
+                    //
+                    //                            Notification::make()
+                    //                                ->title('Customer Pipeline Updated')
+                    //                                ->success()
+                    //                                ->send();
+                    //                        }),
+                    //                    Tables\Actions\Action::make('Add Task')
+                    //                        ->icon('heroicon-s-clipboard-document')
+                    //                        ->form([
+                    //                            Forms\Components\RichEditor::make('description')
+                    //                                ->required(),
+                    //                            Forms\Components\Select::make('user_id')
+                    //                                ->preload()
+                    //                                ->searchable()
+                    //                                ->relationship('employee', 'name'),
+                    //                            Forms\Components\DatePicker::make('due_date')
+                    //                                ->native(false),
+                    //
+                    //                        ])
+                    //                        ->action(function (Customer $customer, array $data) {
+                    //                            $customer->tasks()->create($data);
+                    //
+                    //                            Notification::make()
+                    //                                ->title('Task created successfully')
+                    //                                ->success()
+                    //                                ->send();
+                    //                        }),
 
-                ])
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

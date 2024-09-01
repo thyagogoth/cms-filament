@@ -30,7 +30,7 @@ return [
     */
 
     'default' => [
-        'theme' => 'default',
+        'theme'       => 'default',
         'theme_color' => 'blue',
     ],
 ];
