@@ -25,58 +25,86 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                \Schmeits\FilamentCharacterCounter\Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(120)
-                    ->characterLimit(120),
-                //                ->showInsideControl(true),
+                Forms\Components\Split::make([
+                    Forms\Components\Section::make([
+                        \Schmeits\FilamentCharacterCounter\Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(120)
+                            ->characterLimit(120),
+                        //                ->showInsideControl(true),
 
-                \Schmeits\FilamentCharacterCounter\Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(120)
-                    ->characterLimit(120),
+                        Forms\Components\Split::make([
 
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                            \Schmeits\FilamentCharacterCounter\Forms\Components\TextInput::make('email')
+                                ->email()
+                                ->required()
+                                ->maxLength(120)
+                                ->characterLimit(120),
 
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
+                            Forms\Components\DateTimePicker::make('email_verified_at'),
 
-                Forms\Components\TextInput::make('custom_fields'),
+                        ]),
 
-                Forms\Components\TextInput::make('avatar_url')
-                    ->maxLength(255),
+                        Forms\Components\Split::make([
+                            Forms\Components\TextInput::make('password')
+                                ->password()
+                                ->confirmed()
+                                ->required()
+                                ->maxLength(255),
 
-                Forms\Components\Select::make('roles')
-                    ->relationship('roles', 'name')
-                    ->multiple()
-                    ->preload()
-                    ->searchable()
-                    ->required(),
-            ]);
+                            Forms\Components\TextInput::make('password_confirmation')
+                                ->password()
+                                ->required()
+                                ->maxLength(255),
+
+            //                Forms\Components\TextInput::make('custom_fields'),
+                        ]),
+                    ]),
+
+                    Forms\Components\Section::make([
+                        Forms\Components\FileUpload::make('avatar_url'),
+                        Forms\Components\Select::make('roles')
+                            ->relationship('roles', 'name')
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                            ->required(),
+                    ])
+                        ->grow(false),
+                ])
+                    ->from('md'),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('avatar_url')
+//                    ->circular()
+                    ->grow(false),
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+//                    ->icon('heroicon-m-envelope'),
 
                 Tables\Columns\TextColumn::make('roles.name')
                     ->searchable(),
+//                    ->icon('heroicon-m-user-group'),
 
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

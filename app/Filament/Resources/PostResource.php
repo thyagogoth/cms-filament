@@ -20,56 +20,110 @@ class PostResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public function getTabs(): array
-    {
-        $tabs = [];
-
-        $tabs[] = Tab::make('All Tasks')
-            // Add badge to the tab
-            ->badge(Task::count());
-        // No need to modify the query as we want to show all tasks
-
-        return $tabs;
-    }
+//    public static function form(Form $form): Form
+//    {
+//        return $form
+//            ->schema([
+//                Forms\Components\Tabs::make('post')->tabs([
+//                    Tab::make('Content')->schema([
+//
+//                        // load indicator
+//                        //                        Forms\Components\DatePicker::make('date')
+//                        //                            ->native(false)
+//                        //                            // ... more methods
+//                        //                            ->hint(new \Illuminate\Support\HtmlString(\Illuminate\Support\Facades\Blade::render('<x-filament::loading-indicator class="w-5 h-5" wire:loading wire:target="data.date" />')))
+//                        //                            ->live(),
+//
+//                        Forms\Components\TextInput::make('title')
+//                            ->required()
+//                            ->minLength(2)
+//                            ->maxLength(255)
+//                            ->live(onBlur: true)
+//                            ->afterStateUpdated(function (Forms\Get $get, Forms\Set $set, ?string $state) {
+//                                if (blank($get('slug'))) {
+//                                    $set('slug', str($state)->slug());
+//                                }
+//                            }),
+//
+//                        Forms\Components\TextInput::make('slug')
+//                            ->required()
+//                            ->minLength(2)
+//                            ->maxLength(255)->unique(column: 'slug', ignoreRecord: true)
+//                            ->live(debounce: 600)
+//                            ->afterStateUpdated(function (?string $state, Forms\Components\TextInput $component) {
+//                                $component->state(str($state)->slug());
+//                            }),
+//
+//                        Forms\Components\RichEditor::make('content')
+//                            ->grow(true)
+//                            ->required()
+//                            ->columnSpanFull(),
+//
+//                        Forms\Components\Select::make('categories')
+//                            ->multiple()
+//                            ->relationship('categories', 'name')
+//                            ->columnSpanFull(),
+//
+//                        Forms\Components\Checkbox::make('is_published'),
+//
+//                        Forms\Components\Checkbox::make('is_featured'),
+//
+//                        Forms\Components\Hidden::make('user_id')
+//                            ->dehydrateStateUsing(fn ($state) => Auth::id()),
+//                    ]),
+//
+//                    Tab::make('Meta')->schema([
+//                        Forms\Components\TextInput::make('meta_description')
+//                            ->maxLength(255)
+//                            ->columnSpanFull(),
+//
+//                        Forms\Components\SpatieMediaLibraryFileUpload::make('cover')
+//                            ->image()
+//                            ->responsiveImages()
+//                            ->imageEditor(),
+//                    ]),
+//                ]),
+//            ])->columns(1);
+//    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Tabs::make('post')->tabs([
-                    Tab::make('Content')->schema([
-
-                        // load indicator
-                        //                        Forms\Components\DatePicker::make('date')
-                        //                            ->native(false)
-                        //                            // ... more methods
-                        //                            ->hint(new \Illuminate\Support\HtmlString(\Illuminate\Support\Facades\Blade::render('<x-filament::loading-indicator class="w-5 h-5" wire:loading wire:target="data.date" />')))
-                        //                            ->live(),
-
-                        Forms\Components\TextInput::make('title')
-                            ->required()
-                            ->minLength(2)
-                            ->maxLength(255)
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (Forms\Get $get, Forms\Set $set, ?string $state) {
-                                if (blank($get('slug'))) {
-                                    $set('slug', str($state)->slug());
-                                }
-                            }),
-
-                        Forms\Components\TextInput::make('slug')
-                            ->required()
-                            ->minLength(2)
-                            ->maxLength(255)->unique(column: 'slug', ignoreRecord: true)
-                            ->live(debounce: 600)
-                            ->afterStateUpdated(function (?string $state, Forms\Components\TextInput $component) {
-                                $component->state(str($state)->slug());
-                            }),
+                Forms\Components\Split::make([
+                    Forms\Components\Section::make([
+                        Forms\Components\Split::make([
+                            Forms\Components\TextInput::make('title')
+                                ->required()
+                                ->maxLength(255)
+                                ->live(onBlur: true)
+                                ->afterStateUpdated(function (Forms\Get $get, Forms\Set $set, ?string $state) {
+                                    if (blank($get('slug'))) {
+                                        $set('slug', str($state)->slug());
+                                    }
+                                }),
+                            Forms\Components\TextInput::make('slug')
+                                ->required()
+                                ->minLength(2)
+                                ->maxLength(255)->unique(column: 'slug', ignoreRecord: true)
+                                ->live(debounce: 600)
+                                ->afterStateUpdated(function (?string $state, Forms\Components\TextInput $component) {
+                                    $component->state(str($state)->slug());
+                                }),
+                        ]),
 
                         Forms\Components\RichEditor::make('content')
-                            ->grow(true)
-                            ->required()
                             ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('meta_description'),
+                    ]),
+
+                    Forms\Components\Section::make([
+
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('cover')
+                            ->image()
+                            ->responsiveImages()
+                            ->imageEditor(),
 
                         Forms\Components\Select::make('categories')
                             ->multiple()
@@ -82,20 +136,20 @@ class PostResource extends Resource
 
                         Forms\Components\Hidden::make('user_id')
                             ->dehydrateStateUsing(fn ($state) => Auth::id()),
-                    ]),
 
-                    Tab::make('Meta')->schema([
-                        Forms\Components\TextInput::make('meta_description')
-                            ->maxLength(255)
-                            ->columnSpanFull(),
+                        Forms\Components\DateTimePicker::make('created_at')
+                            ->format('d/m/Y H:i')
+                            ->default(now()),
 
-                        Forms\Components\SpatieMediaLibraryFileUpload::make('cover')
-                            ->image()
-                            ->responsiveImages()
-                            ->imageEditor(),
-                    ]),
-                ]),
-            ])->columns(1);
+                        Forms\Components\DateTimePicker::make('updated_at')
+                            ->format('d/m/Y H:i')
+                            ->default(now()),
+                    ])
+                    ->grow(false),
+                ])
+                ->from('md'),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -111,9 +165,9 @@ class PostResource extends Resource
                     ->searchable()
                     ->badge(),
 
-                Tables\Columns\CheckboxColumn::make('is_featured'),
-
-                Tables\Columns\CheckboxColumn::make('is_published'),
+//                Tables\Columns\CheckboxColumn::make('is_featured'),
+//
+//                Tables\Columns\CheckboxColumn::make('is_published'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->date('d/m/Y')

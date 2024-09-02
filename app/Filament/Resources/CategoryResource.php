@@ -24,41 +24,65 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255)
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(function (Forms\Get $get, Forms\Set $set, ?string $state) {
-                        if (blank($get('slug'))) {
-                            $set('slug', str($state)->slug());
-                        }
-                    }),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
-                    ->minLength(2)
-                    ->maxLength(255)->unique(column: 'slug', ignoreRecord: true)
-                    ->live(debounce: 600)
-                    ->afterStateUpdated(function (?string $state, Forms\Components\TextInput $component) {
-                        $component->state(str($state)->slug());
-                    }),
-                Forms\Components\RichEditor::make('content')
-                    ->columnSpanFull(),
+                Forms\Components\Split::make([
+                    Forms\Components\Section::make([
+                        Forms\Components\Split::make([
+                            Forms\Components\TextInput::make('name')
+                                ->required()
+                                ->maxLength(255)
+                                ->live(onBlur: true)
+                                ->afterStateUpdated(function (Forms\Get $get, Forms\Set $set, ?string $state) {
+                                    if (blank($get('slug'))) {
+                                        $set('slug', str($state)->slug());
+                                    }
+                                }),
+                            Forms\Components\TextInput::make('slug')
+                                ->required()
+                                ->minLength(2)
+                                ->maxLength(255)->unique(column: 'slug', ignoreRecord: true)
+                                ->live(debounce: 600)
+                                ->afterStateUpdated(function (?string $state, Forms\Components\TextInput $component) {
+                                    $component->state(str($state)->slug());
+                                }),
+                        ]),
 
-                //                Forms\Components\Select::make('parent_id')
-                //                    ->options(fn () => \App\Models\Category::query()->pluck('name', 'id'))
-                //                    ->nullable()
-                //                    ->columnSpan(2),
+                        Forms\Components\RichEditor::make('content')
+                            ->columnSpanFull(),
 
-                Forms\Components\ColorPicker::make('bg_color')
-                    ->label('Background Color'),
-                Forms\Components\ColorPicker::make('text_color')
-                    ->label('Text Color'),
-                Forms\Components\TextInput::make('meta_description'),
-                Forms\Components\SpatieMediaLibraryFileUpload::make('cover')
-                    ->image()
-                    ->imageEditor()
-                    ->multiple(),
-            ]);
+                        //                Forms\Components\Select::make('parent_id')
+                        //                    ->options(fn () => \App\Models\Category::query()->pluck('name', 'id'))
+                        //                    ->nullable()
+                        //                    ->columnSpan(2),
+
+                        Forms\Components\TextInput::make('meta_description'),
+                    ]),
+
+                    Forms\Components\Section::make([
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('cover')
+                            ->image()
+                            ->imageEditor(),
+//                            ->multiple(),
+
+                        Forms\Components\ColorPicker::make('bg_color')
+                            ->label('Background Color'),
+
+                        Forms\Components\ColorPicker::make('text_color')
+                            ->label('Text Color'),
+
+                        Forms\Components\DateTimePicker::make('created_at')
+                            ->format('d/m/Y H:i')
+                            ->default(now()),
+
+                        Forms\Components\DateTimePicker::make('updated_at')
+                            ->format('d/m/Y H:i')
+                            ->default(now()),
+
+                    ])
+                    ->grow(false),
+                ])
+                    ->from('md'),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -79,14 +103,14 @@ class CategoryResource extends Resource
                 Tables\Columns\ColorColumn::make('text_color'),
 
                 //                Tables\Columns\TextColumn::make('archived_at')
-                //                    ->dateTime()
+                //                    ->date('d/m/Y H:i)
                 //                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
+                    ->date('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 //                Tables\Columns\TextColumn::make('updated_at')
-                //                    ->dateTime()
+                //                    ->date('d/m/Y H:i)
                 //                    ->sortable()
                 //                    ->toggleable(isToggledHiddenByDefault: true),
 

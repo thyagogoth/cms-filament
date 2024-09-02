@@ -23,16 +23,32 @@ class ListPosts extends ListRecords
     public function getTabs(): array
     {
         return [
-            'all'       => Tab::make(__('All')),
-            'published' => Tab::make(__('Published'))->modifyQueryUsing(function ($query) {
-                return $query->where('is_published', true);
-            }),
-            'draft' => Tab::make(__('Draft'))->modifyQueryUsing(function ($query) {
-                return $query->where('is_published', false);
-            }),
-            'featured' => Tab::make(__('Featured'))->modifyQueryUsing(function ($query) {
-                return $query->where('is_featured', true);
-            }),
+            'all'       => Tab::make(__('All'))
+//                ->iconPosition(\Filament\Support\Enums\IconPosition::After)
+                ->icon('heroicon-o-list-bullet')
+                ->badge(\App\Models\Post::query()->count())
+                ->badgeColor('info'),
+
+            'published' => Tab::make(__('Published'))
+                    ->modifyQueryUsing(function ($query) {
+                        return $query->where('is_published', true);
+                    })
+                    ->iconPosition(\Filament\Support\Enums\IconPosition::After)
+                    ->icon('heroicon-o-check-circle'),
+
+            'draft' => Tab::make(__('Draft'))
+                    ->modifyQueryUsing(function ($query) {
+                        return $query->where('is_published', false);
+                    })
+                    ->iconPosition(\Filament\Support\Enums\IconPosition::After)
+                    ->icon('heroicon-o-document-text'),
+
+            'featured' => Tab::make(__('Featured'))
+                    ->modifyQueryUsing(function ($query) {
+                        return $query->where('is_featured', true);
+                    })
+                    ->iconPosition(\Filament\Support\Enums\IconPosition::After)
+                    ->icon('heroicon-o-star'),
         ];
     }
 }
